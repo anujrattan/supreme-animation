@@ -24,6 +24,7 @@ interface Lead {
 interface LeadsResponse {
   success: boolean;
   data: Lead[];
+  error?: string;
   pagination: {
     total: number;
     limit: number;

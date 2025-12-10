@@ -353,7 +353,6 @@ export default function Industries() {
                     {/* Colorful Icon with subtle wobble */}
                     <motion.div
                       whileHover={{ rotate: 360, scale: 1.15 }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
                       animate={{
                         rotate: [
                           0,
@@ -385,11 +384,12 @@ export default function Industries() {
                         boxShadow: `0 6px 20px ${industry.color}50, 0 2px 8px ${industry.color}30`,
                       }}
                     >
-                      <industry.icon 
-                        size={36} 
-                        color="#ffffff"
-                        style={{ width: "clamp(28px, 4.5vw, 36px)", height: "clamp(28px, 4.5vw, 36px)" }}
-                      />
+                      <div style={{ width: "clamp(28px, 4.5vw, 36px)", height: "clamp(28px, 4.5vw, 36px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <industry.icon 
+                          size={36} 
+                          color="#ffffff"
+                        />
+                      </div>
                     </motion.div>
 
                     {/* Industry Name */}
