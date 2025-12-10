@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Note: Backend (Express.js) needs to be deployed separately
+# Options: Railway, Render, or convert to Netlify Functions
+
