@@ -1,13 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // For Netlify: Remove static export to use Next.js SSR
-  // For GoDaddy: Uncomment output: 'export' and images.unoptimized
-  // output: 'export',
-  // images: {
-  //   unoptimized: true,
-  // },
-  // trailingSlash: true,
+  // Static export for GoDaddy shared hosting
+  output: 'export',
+  images: {
+    unoptimized: true, // Required for static export
+  },
+  trailingSlash: true, // Helps with routing on static hosts
 };
 
 export default nextConfig;
