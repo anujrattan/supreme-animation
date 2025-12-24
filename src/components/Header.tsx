@@ -713,14 +713,14 @@ function MobileMenu({
                 marginTop: "2rem",
                 padding: "1rem 2rem",
                 background:
-                  "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%)",
+                  "linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%)",
                 border: "none",
                 borderRadius: "9999px",
                 color: "#ffffff",
                 fontSize: "1rem",
                 fontWeight: 600,
                 cursor: "pointer",
-                boxShadow: "0 4px 20px rgba(99, 102, 241, 0.4)",
+                boxShadow: "0 4px 20px rgba(6, 182, 212, 0.5)",
                 transition: "all 0.3s ease",
               }}
             >
@@ -786,25 +786,24 @@ export default function Header() {
           left: 0,
           right: 0,
           zIndex: 100,
-          backgroundColor: isScrolled ? "rgba(5, 5, 9, 0.85)" : "transparent",
-          backdropFilter: isScrolled ? "blur(10px)" : "none",
-          borderBottom: isScrolled
-            ? "1px solid rgba(255, 255, 255, 0.1)"
-            : "1px solid transparent",
+          backgroundColor: "#d42e28",
+          backdropFilter: "none",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.18)",
           transition: "all 0.3s ease",
-          boxShadow: isScrolled ? "0 4px 20px rgba(0, 0, 0, 0.2)" : "none",
+          boxShadow: "0 10px 28px rgba(0, 0, 0, 0.22)",
+          height: "var(--header-height)",
         }}
       >
         <div
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
-            padding: isScrolled ? "0.75rem 2rem" : "1rem 2rem",
+            padding: "0 2rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            transition: "padding 0.3s ease",
             position: "relative",
+            height: "100%",
           }}
         >
           {/* Logo */}
@@ -824,14 +823,19 @@ export default function Header() {
               gap: "0.5rem",
             }}
           >
-            {/* Placeholder for logo image - uncomment when ready */}
-            {/* <Image
-              src="/Supreme Animation - Logo - No bg.png"
+            <Image
+              src="/Logo04.png"
               alt="Supreme Animation"
-              width={120}
-              height={40}
-              style={{ height: 'auto', width: 'auto' }}
-            /> */}
+              width={250}
+              height={250}
+              priority
+              style={{
+                width: "clamp(120px, 15vw, 250px)",
+                height: "auto",
+                objectFit: "contain",
+                filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.25))",
+              }}
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -1146,20 +1150,20 @@ export default function Header() {
           {/* CTA Button - Desktop */}
           <motion.button
             onClick={() => scrollToSection("contact")}
-            whileHover={{ scale: 1.05, boxShadow: "0 8px 30px rgba(99, 102, 241, 0.5)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0 8px 30px rgba(6, 182, 212, 0.6)" }}
             whileTap={{ scale: 0.98 }}
             style={{
               display: "none",
               padding: "0.75rem 1.5rem",
               background:
-                "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%)",
+                "linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%)",
               border: "none",
               borderRadius: "9999px",
               color: "#ffffff",
               fontSize: "0.9rem",
               fontWeight: 600,
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(99, 102, 241, 0.4)",
+              boxShadow: "0 4px 20px rgba(6, 182, 212, 0.5)",
               transition: "all 0.3s ease",
             }}
             className="cta-button"

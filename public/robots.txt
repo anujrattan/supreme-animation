@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /manage/
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://supremeanimation.com/sitemap.xml
+

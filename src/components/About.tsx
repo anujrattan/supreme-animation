@@ -75,7 +75,7 @@ export default function About() {
                             marginBottom: '1.5rem'
                         }}
                     >
-                        Supreme Animation Studio was founded in 2021 by a co-founder who, after working at a leading animation studio for four to five years, decided to build something independent. Driven by a passion for creative freedom and the desire to work on his own terms, he established a studio that combines artistic excellence with innovative technology.
+                        Supreme Animation Studio was founded in 2016 with a simple goal: create standout animation with the freedom to explore new ways of storytelling — and the discipline to deliver.
                     </motion.p>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -90,7 +90,7 @@ export default function About() {
                             fontWeight: 400
                         }}
                     >
-                        Today, we're a team of five dedicated artists and creators, bringing over a decade of combined experience to every project. We're particularly excited about the advancement of AI in animation and how it can benefit both artists and clients, enabling us to push creative boundaries while maintaining the highest quality standards.
+                        Today, we’re a team of five, bringing 10+ years of combined experience. We embrace AI-enhanced pipelines to move faster and iterate smarter — without losing the soul of great craft.
                     </motion.p>
                 </motion.div>
 

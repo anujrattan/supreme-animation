@@ -8,7 +8,7 @@ const tiles = [
     id: "what-sets-us-apart",
     title: "What Sets Us Apart",
     description:
-      "A rare blend of traditional animation mastery and advanced AI workflows — delivering high-quality results faster, smarter, and with more creative flexibility.",
+      "Traditional animation craft + AI-enhanced workflows — premium results, faster turnarounds, and more creative flexibility.",
     icon: Sparkles,
   },
   {
@@ -87,7 +87,7 @@ export default function AboutSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            Where Creative Vision Meets Technical Excellence
+            Creative Vision, Technical Excellence
           </motion.h2>
 
           {/* Paragraph */}
@@ -104,17 +104,14 @@ export default function AboutSection() {
               fontWeight: 400,
             }}
           >
-            Supreme Animation blends artistic craftsmanship with innovative
-            technology to create stories that move, engage, and inspire. Founded
-            in 2021, the studio was built on a passion for creative freedom and
-            the desire to explore new ways of storytelling.
+            Supreme Animation blends artistry and technology to craft stories
+            that move audiences. Founded in 2016, we’re built for creative
+            freedom and modern storytelling.
             <br />
             <br />
-            Our five-member team brings over a decade of combined experience to
-            every project — from character-driven narratives to advanced animation
-            workflows. With the rise of AI-enhanced pipelines, we're embracing new
-            creative possibilities while maintaining the soul and quality of
-            traditional artistry.
+            Our five-person team brings 10+ years of combined experience — from
+            character-led narratives to efficient production pipelines. We use
+            AI-enhanced workflows to move faster without losing the human touch.
           </motion.p>
         </motion.div>
 

@@ -80,7 +80,14 @@ function CyclingTitle() {
         display: "inline-block",
       }}
     >
-      <span style={{ color: "#ffffff" }}>
+      <span
+        style={{
+          color: "#ffffff",
+          WebkitTextStroke: "2px #000000",
+          textShadow:
+            "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000",
+        }}
+      >
         We animate{" "}
         <span
           style={{
@@ -140,52 +147,6 @@ export default function Overlay() {
         padding: "1.5rem",
       }}
     >
-      {/* Logo - Top Left - Static and Animated Side by Side */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-        style={{
-          position: "absolute",
-          top: "clamp(1rem, 3vw, 2rem)",
-          left: "clamp(1rem, 3vw, 2rem)",
-          zIndex: 20,
-          pointerEvents: "auto",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "1.5rem",
-          flexWrap: "nowrap",
-        }}
-      >
-        {/* Static Logo */}
-        <motion.a
-          href="#"
-          whileHover={{ scale: 1.05 }}
-          style={{
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          <Image
-            src="/Supreme Animation - Logo - No bg.png"
-            alt="Supreme Animation Studio Logo - Static"
-            width={150}
-            height={60}
-            style={{
-              width: "clamp(100px, 15vw, 150px)",
-              height: "auto",
-              objectFit: "contain",
-              filter: "drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3))",
-              display: "block",
-            }}
-            priority
-          />
-        </motion.a>
-      </motion.div>
       <div
         style={{
           textAlign: "center",
@@ -351,7 +312,7 @@ export default function Overlay() {
           }}
         >
           <motion.a
-            href="https://instagram.com/supremeanimation"
+            href="https://www.instagram.com/supreme_animation_studio/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

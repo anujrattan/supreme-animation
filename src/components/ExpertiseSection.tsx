@@ -181,7 +181,7 @@ export default function ExpertiseSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            One studio. Many styles. Endless storytelling possibilities.
+            One Studio. Boundless Creativity.
           </motion.h2>
         </motion.div>
 

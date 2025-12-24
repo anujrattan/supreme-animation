@@ -19,7 +19,8 @@ export default function Home() {
       {/* Hero Section with Video Background */}
       <section id="home" style={{
         width: '100%',
-        height: '100vh',
+        height: 'calc(100vh - var(--header-height))',
+        marginTop: 'var(--header-height)',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -29,25 +30,25 @@ export default function Home() {
       </section>
       
       {/* Content Sections */}
-      <div id="portfolio">
+      <section id="portfolio" aria-label="Portfolio">
         <Portfolio />
-      </div>
-      <div id="services">
+      </section>
+      <section id="services" aria-label="Services">
         <ExpertiseSection />
-      </div>
-      <div id="clients">
+      </section>
+      <section id="clients" aria-label="Client Partnerships">
         <Partnerships />
-      </div>
-      <div id="industries">
+      </section>
+      <section id="industries" aria-label="Industries We Serve">
         <Industries />
-      </div>
-      <div id="about">
+      </section>
+      <section id="about" aria-label="About the Studio">
         <AboutSection />
         <ProcessWorkflow />
-      </div>
-      <div id="contact">
+      </section>
+      <section id="contact" aria-label="Contact Us">
         <Contact />
-      </div>
+      </section>
       
       {/* Footer */}
       <Footer />

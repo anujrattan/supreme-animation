@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, MapPin, Globe, Instagram, ArrowUp, MessageCircle } from "lucide-react";
+import Image from "next/image";
+import { Mail, MapPin, Globe, Instagram, ArrowUp, Linkedin, Youtube } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -47,6 +48,66 @@ export default function Footer() {
     { label: "About", id: "about" },
     { label: "Contact", id: "contact" },
   ];
+
+  const email = "info@supremeanimation.com";
+
+  const SocialGlyph = ({ text }: { text: string }) => (
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+      <rect x="0" y="0" width="20" height="20" rx="6" ry="6" fill="transparent" />
+      <text
+        x="10"
+        y="10.5"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontFamily="var(--font-headline), sans-serif"
+        fontSize="9"
+        fontWeight="900"
+        fill="currentColor"
+        letterSpacing="-0.02em"
+      >
+        {text}
+      </text>
+    </svg>
+  );
+
+  const socials = [
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/satnam-sidhu/",
+      gradient: "linear-gradient(135deg, #0a66c2, #1d4ed8)",
+      icon: <Linkedin size={20} />,
+    },
+    {
+      label: "ArtStation",
+      href: "https://www.artstation.com/supremeanimation",
+      gradient: "linear-gradient(135deg, #13aff0, #0b3a5a)",
+      icon: <SocialGlyph text="AS" />,
+    },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/supreme_animation_studio?igsh=MjRiYXR5NW9ueXA4&utm_source=qr",
+      gradient: "linear-gradient(135deg, #f58529, #dd2a7b, #8134af)",
+      icon: <Instagram size={20} />,
+    },
+    {
+      label: "YouTube",
+      href: "https://youtube.com/@supremeanimationstudio?si=vXdH8wJXAE3SNhf3",
+      gradient: "linear-gradient(135deg, #ff0033, #b91c1c)",
+      icon: <Youtube size={20} />,
+    },
+    {
+      label: "Behance",
+      href: "https://www.behance.net/supremeanimation",
+      gradient: "linear-gradient(135deg, #1769ff, #0ea5e9)",
+      icon: <SocialGlyph text="Be" />,
+    },
+    {
+      label: "Vimeo",
+      href: "https://vimeo.com/supremeanimation",
+      gradient: "linear-gradient(135deg, #1ab7ea, #0284c7)",
+      icon: <SocialGlyph text="V" />,
+    },
+  ] as const;
 
   return (
     <footer
@@ -99,36 +160,62 @@ export default function Footer() {
               Blending AI and artistry to move ideas with emotion, turning
               vision into captivating motion.
             </p>
-            {/* Social Media */}
-            <div style={{ display: "flex", gap: "1rem" }}>
-              <motion.a
-                href="https://instagram.com/supremeanimation"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+            {/* Logo + Social Media */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+              <div
                 style={{
-                  width: "40px",
-                  height: "40px",
+                  width: "clamp(120px, 15vw, 250px)",
+                  height: "auto",
+                  borderRadius: "1.25rem",
+                  backgroundColor: "#d42e28",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: "0.5rem",
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  transition: "all 0.3s ease",
+                  padding: "1rem",
+                  boxShadow: "0 14px 34px rgba(0,0,0,0.35)",
+                  border: "1px solid rgba(255,255,255,0.18)",
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(196, 30, 58, 0.3)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-                }}
-                aria-label="Follow us on Instagram"
               >
-                <Instagram size={20} />
-              </motion.a>
+                <Image
+                  src="/Logo04.png"
+                  alt="Supreme Animation logo"
+                  width={250}
+                  height={250}
+                  style={{ width: "100%", height: "auto", objectFit: "contain" }}
+                />
+              </div>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+              {socials.map((s) => (
+                <motion.a
+                  key={s.label}
+                  href={s.href}
+                  target={s.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={s.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  whileHover={{ scale: 1.08, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    width: "42px",
+                    height: "42px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "0.85rem",
+                    background: s.gradient,
+                    color: "#ffffff",
+                    textDecoration: "none",
+                    boxShadow:
+                      "0 10px 26px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.20)",
+                    border: "1px solid rgba(255, 255, 255, 0.18)",
+                    transform: "translateZ(0)",
+                    transition: "all 0.25s ease",
+                  }}
+                  aria-label={s.label}
+                  title={s.label}
+                >
+                  {s.icon}
+                </motion.a>
+              ))}
+            </div>
             </div>
           </motion.div>
 
@@ -152,7 +239,14 @@ export default function Footer() {
             >
               Quick Links
             </h4>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <nav
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                gap: "0.75rem 1.25rem",
+                alignItems: "start",
+              }}
+            >
               {quickLinks.map((link) => (
                 <a
                   key={link.id}
@@ -208,7 +302,7 @@ export default function Footer() {
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <a
-                href="mailto:hello@supremeanimation.com"
+                href={`mailto:${email}`}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -228,7 +322,7 @@ export default function Footer() {
                 }}
               >
                 <Mail size={18} />
-                <span>hello@supremeanimation.com</span>
+                <span>{email}</span>
               </a>
               <div
                 style={{

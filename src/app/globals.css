@@ -1,9 +1,9 @@
 :root {
   --color-bg: #fafafa;
   --color-text: #1a1a1a;
-  --color-primary: #C41E3A;
+  --color-primary: #c41e3a;
   /* Brick Red - Primary Brand Color */
-  --color-secondary: #991B1B;
+  --color-secondary: #991b1b;
   /* Darker Red */
   --color-accent: #000000;
   /* Black for accents */
@@ -13,6 +13,7 @@
   /* Light borders */
   --font-main: var(--font-poppins), var(--font-manrope), sans-serif;
   --font-headline: var(--font-manrope), sans-serif;
+  --header-height: 92px;
 }
 
 * {
@@ -44,11 +45,21 @@ button {
   font: inherit;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-headline), sans-serif;
 }
 
-p, span, li, ul, ol, div {
+p,
+span,
+li,
+ul,
+ol,
+div {
   font-family: var(--font-poppins), var(--font-manrope), sans-serif;
 }
 
@@ -67,12 +78,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C41E3A;
+  background: #c41e3a;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #991B1B;
+  background: #991b1b;
 }
 
 /* Sunlight sweep animation - simulates sunlight moving across text as planet rotates */
@@ -121,9 +132,7 @@ html {
 /* 3D Text Effects */
 .hero-title-3d {
   font-family: var(--font-headline), sans-serif;
-  text-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.45),
-    0 0 30px rgba(196, 30, 58, 0.25);
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 30px rgba(196, 30, 58, 0.25);
   transform: perspective(1000px) rotateX(2deg);
   transform-style: preserve-3d;
 }
@@ -141,7 +150,14 @@ html {
 
 /* Hero gradient headline */
 .hero-gradient-text {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, #c41e3a 25%, #991b1b 50%, #c41e3a 75%, rgba(255, 255, 255, 0.3) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    #c41e3a 25%,
+    #991b1b 50%,
+    #c41e3a 75%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -165,8 +181,8 @@ html {
 .hero-subtitle-outline-red {
   font-family: var(--font-headline), sans-serif;
   color: transparent;
-  -webkit-text-stroke: 2px #C41E3A;
-  text-stroke: 2px #C41E3A;
+  -webkit-text-stroke: 2px #c41e3a;
+  text-stroke: 2px #c41e3a;
   font-weight: 700;
   animation: subtitlePulse 3s ease-in-out infinite;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
@@ -180,13 +196,14 @@ html {
 }
 
 @keyframes subtitlePulse {
-  0%, 100% {
-    -webkit-text-stroke-color: #C41E3A;
-    text-stroke-color: #C41E3A;
+  0%,
+  100% {
+    -webkit-text-stroke-color: #c41e3a;
+    text-stroke-color: #c41e3a;
   }
   50% {
-    -webkit-text-stroke-color: #991B1B;
-    text-stroke-color: #991B1B;
+    -webkit-text-stroke-color: #991b1b;
+    text-stroke-color: #991b1b;
   }
 }
 
@@ -205,10 +222,12 @@ html {
 
 /* Blinking cursor animation */
 @keyframes blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -218,10 +237,32 @@ html {
   .services-split-view {
     grid-template-columns: 1fr !important;
   }
-  
+
   .services-details-panel {
     position: relative !important;
     top: 0 !important;
     max-height: none !important;
+  }
+}
+
+/* Contact Form Responsive Styles */
+@media (max-width: 1024px) {
+  .contact-container {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-form {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-form label {
+    grid-column: 1 / -1 !important;
   }
 }

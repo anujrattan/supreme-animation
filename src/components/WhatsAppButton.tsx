@@ -52,22 +52,26 @@ export default function WhatsAppButton() {
       {/* Pulsating ring effect */}
       <motion.div
         animate={{
-          scale: [1, 1.2, 1.2],
-          opacity: [0.4, 0, 0],
+          scale: [1, 1.08, 1],
+          opacity: [0.55, 0.25, 0.55],
         }}
         transition={{
-          duration: 2,
+          duration: 1.8,
           repeat: Infinity,
-          ease: "easeOut",
+          ease: "easeInOut",
         }}
         style={{
           position: "absolute",
-          width: "85%",
-          height: "85%",
+          width: "74%",
+          height: "74%",
           borderRadius: "50%",
-          border: "1.5px solid #25D366",
-          top: "7.5%",
-          left: "7.5%",
+          border: "2px solid rgba(255, 255, 255, 0.85)",
+          top: "13%",
+          left: "13%",
+          boxShadow:
+            "0 0 0 1px rgba(37, 211, 102, 0.35), 0 0 18px rgba(37, 211, 102, 0.55), 0 0 38px rgba(37, 211, 102, 0.25)",
+          filter: "blur(0.2px)",
+          pointerEvents: "none",
         }}
       />
       
@@ -84,16 +88,15 @@ export default function WhatsAppButton() {
         }}
       >
         <defs>
-          {/* Top arc - radius 19px, curves downward from left to right through top */}
+          {/* Outer arcs - tuned so text sits evenly around the icon */}
           <path
             id="topArc"
-            d="M 16,35 A 19,19 0 0,1 54,35"
+            d="M 7,35 A 28,28 0 0,1 63,35"
             fill="none"
           />
-          {/* Bottom arc - radius 19px, curves upward from left to right through bottom */}
           <path
             id="bottomArc"
-            d="M 16,35 A 19,19 0 0,0 54,35"
+            d="M 7,35 A 28,28 0 0,0 63,35"
             fill="none"
           />
         </defs>
@@ -104,8 +107,9 @@ export default function WhatsAppButton() {
           fill="#ffffff"
           fontFamily="var(--font-poppins), sans-serif"
           letterSpacing="0.3px"
+          dominantBaseline="middle"
         >
-          <textPath href="#topArc" startOffset="50%" textAnchor="middle">
+          <textPath href="#topArc" startOffset="50%" textAnchor="middle" dy="-1">
             Click to
           </textPath>
         </text>
@@ -116,8 +120,9 @@ export default function WhatsAppButton() {
           fill="#ffffff"
           fontFamily="var(--font-poppins), sans-serif"
           letterSpacing="0.3px"
+          dominantBaseline="middle"
         >
-          <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">
+          <textPath href="#bottomArc" startOffset="50%" textAnchor="middle" dy="1">
             WhatsApp
           </textPath>
         </text>
