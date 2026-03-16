@@ -8,7 +8,6 @@ import ExpertiseSection from "@/components/ExpertiseSection";
 import AboutSection from "@/components/AboutSection";
 import ProcessWorkflow from "@/components/ProcessWorkflow";
 import Header from "@/components/Header";
-import Partnerships from "@/components/Partnerships";
 import Industries from "@/components/Industries";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -30,21 +29,20 @@ export default function Home() {
       </section>
       
       {/* Content Sections */}
-      <section id="portfolio" aria-label="Portfolio">
+      <section id="portfolio" aria-label="Work">
         <Portfolio />
       </section>
       <section id="services" aria-label="Services">
         <ExpertiseSection />
-      </section>
-      <section id="clients" aria-label="Client Partnerships">
-        <Partnerships />
       </section>
       <section id="industries" aria-label="Industries We Serve">
         <Industries />
       </section>
       <section id="about" aria-label="About the Studio">
         <AboutSection />
-        <ProcessWorkflow />
+        <div id="process">
+          <ProcessWorkflow />
+        </div>
       </section>
       <section id="contact" aria-label="Contact Us">
         <Contact />

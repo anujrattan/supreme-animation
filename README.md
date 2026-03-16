@@ -105,7 +105,7 @@ All documentation files are located in the `readme/` folder:
 
 ### Frontend (.env)
 
-- `NEXT_PUBLIC_BACKEND_URL` - Backend API URL
+<!-- Deprecated: old Node backend URL (no longer used) -->
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
 

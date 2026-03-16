@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Mail, MapPin, Globe, Instagram, ArrowUp, Linkedin, Youtube } from "lucide-react";
+import { Mail, MapPin, Phone, Instagram, ArrowUp, Linkedin, Youtube } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -90,9 +90,15 @@ export default function Footer() {
       icon: <Instagram size={20} />,
     },
     {
-      label: "YouTube",
-      href: "https://youtube.com/@supremeanimationstudio?si=vXdH8wJXAE3SNhf3",
+      label: "YouTube (Studio)",
+      href: "https://www.youtube.com/@supremeanimationstudio",
       gradient: "linear-gradient(135deg, #ff0033, #b91c1c)",
+      icon: <Youtube size={20} />,
+    },
+    {
+      label: "YouTube – LittleChamps Rhymes",
+      href: "https://www.youtube.com/@LittleChampsrhymes",
+      gradient: "linear-gradient(135deg, #f97316, #ec4899)",
       icon: <Youtube size={20} />,
     },
     {
@@ -178,7 +184,7 @@ export default function Footer() {
               >
                 <Image
                   src="/Logo04.png"
-                  alt="Supreme Animation logo"
+                  alt="Supreme Animation Studio - Professional Animation Services Logo"
                   width={250}
                   height={250}
                   style={{ width: "100%", height: "auto", objectFit: "contain" }}
@@ -327,7 +333,7 @@ export default function Footer() {
               <div
                 style={{
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   gap: "0.75rem",
                   color: "rgba(255, 255, 255, 0.7)",
                   fontSize: "0.95rem",
@@ -335,14 +341,12 @@ export default function Footer() {
                   fontWeight: 400,
                 }}
               >
-                <MapPin size={18} style={{ flexShrink: 0, marginTop: "2px" }} />
-                <div>
-                  <p style={{ margin: 0, lineHeight: "1.6" }}>
-                    4800 Meadows Rd, STE 300
-                    <br />
-                    Lake Oswego, OR 97035
-                  </p>
-                </div>
+                <MapPin size={18} style={{ flexShrink: 0 }} />
+                <p style={{ margin: 0, lineHeight: "1.6" }}>
+                  E-190, Fourth Floor, Phase 8B
+                  <br />
+                  Mohali, Punjab, 160055
+                </p>
               </div>
               <div
                 style={{
@@ -355,8 +359,53 @@ export default function Footer() {
                   fontWeight: 400,
                 }}
               >
-                <Globe size={18} />
-                <span>London • Punjab • Ajman • Remote-first</span>
+                <Phone size={18} style={{ flexShrink: 0 }} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.25rem",
+                  }}
+                >
+                  <a
+                    href="tel:+919646168597"
+                    style={{
+                      color: "rgba(255, 255, 255, 0.8)",
+                      textDecoration: "none",
+                      fontSize: "0.95rem",
+                      wordBreak: "keep-all",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#ffffff";
+                      e.currentTarget.style.textDecoration = "underline";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)";
+                      e.currentTarget.style.textDecoration = "none";
+                    }}
+                  >
+                    +91-9646168597
+                  </a>
+                  <a
+                    href="tel:+919988966688"
+                    style={{
+                      color: "rgba(255, 255, 255, 0.8)",
+                      textDecoration: "none",
+                      fontSize: "0.95rem",
+                      wordBreak: "keep-all",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#ffffff";
+                      e.currentTarget.style.textDecoration = "underline";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)";
+                      e.currentTarget.style.textDecoration = "none";
+                    }}
+                  >
+                    +91-9988966688
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>

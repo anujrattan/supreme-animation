@@ -1,140 +1,317 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Bot, UserCircle, Gamepad2, Video, Sparkles, Code } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Film,
+  Building2,
+  Megaphone,
+  Gamepad2,
+  Stethoscope,
+  Zap,
+  Globe2,
+} from "lucide-react";
+import Link from "next/link";
 
-type ExpertiseItem = {
+type Service = {
   id: string;
   title: string;
   tagline: string;
   description: string;
+  icon: React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }>;
+  color: string;
   deliverables: string[];
-  industries: string[];
-  icon: React.ComponentType<{ size?: number; color?: string }>;
+  href: string;
 };
 
-const expertiseItems: ExpertiseItem[] = [
+const services: Service[] = [
   {
-    id: "ai-avatars",
-    title: "AI Avatars & Virtual Performers",
-    tagline: "Real-time animated characters for streams & branded content.",
-    icon: Bot,
+    id: "3d-animation",
+    title: "3D Animation Production",
+    tagline: "Cinematic sequences that captivate and convert.",
     description:
-      "We design and rig expressive AI-driven avatars and virtual performers that appear live on streams, events, and interactive experiences. From concept art to lip-sync, we handle the full pipeline.",
-    deliverables: [
-      "Custom avatar design & style frames",
-      "Real-time rigs (virtual streamers, hosts, and performers)",
-      "Facial & body motion capture integration",
-      "Lip-sync and puppeteering setups",
-    ],
-    industries: [
-      "Streaming & Content Creation",
-      "Influencers & Creators",
-      "Brands & Campaigns",
-      "Events & Experiential",
-    ],
+      "From character-led narratives to product animation and studio showreels, we handle the full 3D production pipeline with precision and artistry.",
+    icon: Film,
+    color: "#C41E3A",
+    deliverables: ["Character Animation", "Cinematic Sequences", "Studio Showreels"],
+    href: "/services/3d-animation/3d-animation-production",
   },
   {
-    id: "digital-humans",
-    title: "Digital Humans",
-    tagline: "Photoreal characters powered by motion capture & AI.",
-    icon: UserCircle,
+    id: "arch-viz",
+    title: "Architectural Visualization",
+    tagline: "Sell the vision before a single brick is laid.",
     description:
-      "We create believable digital humans for film, games, and interactive media. Using motion capture technology and AI, we ensure they move and emote like real people—from clean topology to lifelike facial animation.",
-    deliverables: [
-      "High-poly and game-ready character models",
-      "Facial rigging & blendshape systems",
-      "Motion-capture cleanup & retargeting",
-      "Lookdev (skin, hair, clothing) and lighting tests",
-    ],
-    industries: ["Film & Series", "Gaming & XR", "Advertising", "Virtual Assistants"],
+      "Photorealistic interior and exterior renders, animated walkthroughs, and day-to-night lighting sequences that turn blueprints into compelling sales tools.",
+    icon: Building2,
+    color: "#1E6FC4",
+    deliverables: ["Interior & Exterior Renders", "Flythrough Animations", "Day-to-Night Lighting"],
+    href: "/services/3d-animation/architectural-visualization",
   },
   {
-    id: "game-art",
-    title: "Game Art & Assets",
-    tagline: "Premium characters, worlds, and props for interactive worlds.",
+    id: "commercial",
+    title: "Commercial & Brand Animation",
+    tagline: "Scroll-stopping spots that make your brand unforgettable.",
+    description:
+      "Product commercials, brand films, and launch campaigns crafted to stop the scroll and move audiences — from concept to final frame.",
+    icon: Megaphone,
+    color: "#C47C1E",
+    deliverables: ["Product Commercials", "Brand Films", "Launch Campaigns"],
+    href: "/services/3d-animation/commercial-brand-animation",
+  },
+  {
+    id: "gaming",
+    title: "Gaming Environments & Art",
+    tagline: "Game assets and cinematic trailers built to impress.",
+    description:
+      "Production-ready environments, character assets, and high-energy cinematics for mobile, console, and PC — built to meet the demands of modern game pipelines.",
     icon: Gamepad2,
-    description:
-      "From stylised to realistic, we build cohesive art systems for games: characters, environments, props, and UI that feel like they belong in the same world.",
-    deliverables: [
-      "Character & creature design",
-      "Environment concepts & production assets",
-      "In-engine ready models (low-poly, baked textures)",
-      "Animation cycles & VFX for gameplay",
-    ],
-    industries: [
-      "PC & Console Games",
-      "Mobile Games",
-      "XR Experiences",
-      "Metaverse / Virtual Worlds",
-    ],
+    color: "#7C3AED",
+    deliverables: ["Game Environments", "Character Assets", "Cinematic Trailers"],
+    href: "/services/3d-animation/gaming-environment",
   },
   {
-    id: "virtual-production",
-    title: "Virtual Production",
-    tagline: "LED volume & XR workflows for film and live content.",
-    icon: Video,
+    id: "medical",
+    title: "Medical & Scientific Animation",
+    tagline: "Complex science made instantly clear.",
     description:
-      "We support virtual production pipelines with camera-tracked environments, real-time lighting, and pre-visualization so directors can see final pixels on set.",
-    deliverables: [
-      "Unreal Engine environments for LED volumes",
-      "Previs & techvis for complex shots",
-      "Camera tracking & real-time compositing support",
-      "On-set graphics & playback assets",
-    ],
-    industries: ["Film & TV", "Live Events & Broadcast", "XR Stages"],
+      "We animate medical devices, surgical procedures, and biological processes with clinical accuracy — for patient education, investor decks, and training.",
+    icon: Stethoscope,
+    color: "#2563EB",
+    deliverables: ["Device Demonstrations", "Surgical Simulations", "Biotech Explainers"],
+    href: "/services/3d-animation/medical-scientific-animation",
   },
   {
-    id: "kids-animation",
-    title: "Kids Animation",
-    tagline: "Whimsical worlds for series, apps, and education.",
-    icon: Sparkles,
+    id: "motion-graphics",
+    title: "Motion Graphics & VFX",
+    tagline: "Dynamic motion that brings your brand to life.",
     description:
-      "We craft kid-friendly IP with strong characters, simple shapes, and bright palettes. Perfect for animated series, learning apps, and branded content for young audiences.",
-    deliverables: [
-      "Character & world design for kids IP",
-      "Storyboards & animatics",
-      "2D/3D animation for episodes & shorts",
-      "Songs, lyrics integration, and basic sound direction",
-    ],
-    industries: [
-      "Kids TV & Streaming",
-      "Ed-Tech Platforms",
-      "Toy & Licensing Brands",
-    ],
+      "Logo animations, broadcast graphics, and data visualization built for every platform — designed to reinforce brand identity and drive engagement.",
+    icon: Zap,
+    color: "#DB2777",
+    deliverables: ["Logo Animation", "Broadcast Graphics", "Data Visualization"],
+    href: "/services/3d-animation/motion-graphics-3d",
   },
   {
-    id: "web-dev",
-    title: "Web & App Development",
-    tagline: "Digital products that showcase and support your story.",
-    icon: Code,
+    id: "web-apps-ai-systems",
+    title: "Web, Apps & AI Systems",
+    tagline: "Custom digital products that ship with your stories.",
     description:
-      "In partnership with Webcrony Solutions, our trusted studio partner, we deliver comprehensive web and app development services. Webcrony Solutions specializes in web development, mobile applications, AI automations, and AI implementations, allowing us to offer end-to-end digital solutions. Together, we turn your IP into interactive experiences — from portfolio sites and mini-games to companion apps that extend your universe and support campaigns.",
+      "In-house web and app development that extends your IP beyond the video — from marketing sites and dashboards to AI-powered automations, chatbots, and calling agents.",
+    icon: Globe2,
+    color: "#0EA5E9",
     deliverables: [
       "Marketing & portfolio websites",
-      "Landing pages for launches & campaigns",
-      "Web & mobile apps with custom front-end",
-      "AI automation & implementation solutions",
-      "Integration with analytics, auth, and CMS",
+      "Custom web & app experiences",
+      "AI automations, chatbots & agents",
     ],
-    industries: ["Studios & Agencies", "Brands & Campaigns", "Startups & Products"],
+    href: "/services/web-development/web-apps-ai-systems",
   },
 ];
 
-export default function ExpertiseSection() {
-  const [selectedId, setSelectedId] = useState<string>(expertiseItems[0].id);
-  const selectedItem = expertiseItems.find((item) => item.id === selectedId) || expertiseItems[0];
+function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const [hovered, setHovered] = useState(false);
 
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, delay: index * 0.08 }}
+      viewport={{ once: true }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: "2rem",
+        borderRadius: "1.25rem",
+        backgroundColor: hovered ? "rgba(255,255,255,0.96)" : "rgba(255,255,255,0.88)",
+        border: `1px solid ${hovered ? `${service.color}33` : "rgba(255,255,255,0.65)"}`,
+        boxShadow: hovered
+          ? `0 22px 60px rgba(15,23,42,0.18), 0 0 0 1px ${service.color}22`
+          : "0 10px 30px rgba(15,23,42,0.08)",
+        transform: hovered ? "translateY(-6px)" : "translateY(0)",
+        backdropFilter: "blur(18px)",
+        WebkitBackdropFilter: "blur(18px)",
+        transition: "all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        cursor: "default",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Top color accent bar */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "3px",
+          background: `linear-gradient(90deg, ${service.color}, ${service.color}80)`,
+          opacity: hovered ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          borderRadius: "1.25rem 1.25rem 0 0",
+        }}
+      />
+
+      {/* Icon */}
+      <div
+        style={{
+          width: "56px",
+          height: "56px",
+          borderRadius: "0.875rem",
+          background: hovered ? `${service.color}18` : `${service.color}0d`,
+          border: `1px solid ${service.color}25`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: "1.5rem",
+          transition: "all 0.3s ease",
+          boxShadow: hovered ? `0 4px 16px ${service.color}30` : "none",
+          flexShrink: 0,
+        }}
+      >
+        <service.icon size={26} color={service.color} strokeWidth={1.75} />
+      </div>
+
+      {/* Title */}
+      <h3
+        style={{
+          fontSize: "clamp(1.1rem, 1.5vw, 1.25rem)",
+          fontWeight: 700,
+          color: "#111",
+          marginBottom: "0.5rem",
+          fontFamily: "var(--font-headline), sans-serif",
+          lineHeight: 1.25,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {service.title}
+      </h3>
+
+      {/* Tagline */}
+      <p
+        style={{
+          fontSize: "0.875rem",
+          color: service.color,
+          fontWeight: 600,
+          marginBottom: "0.875rem",
+          fontFamily: "var(--font-poppins), sans-serif",
+          lineHeight: 1.4,
+        }}
+      >
+        {service.tagline}
+      </p>
+
+      {/* Description */}
+      <p
+        style={{
+          fontSize: "0.9rem",
+          color: "rgba(26,26,26,0.65)",
+          lineHeight: 1.75,
+          marginBottom: "1.5rem",
+          fontFamily: "var(--font-poppins), sans-serif",
+          fontWeight: 400,
+          flex: 1,
+        }}
+      >
+        {service.description}
+      </p>
+
+      {/* Divider */}
+      <div
+        style={{
+          height: "1px",
+          backgroundColor: "rgba(0,0,0,0.07)",
+          marginBottom: "1.25rem",
+        }}
+      />
+
+      {/* Deliverables */}
+      <ul
+        style={{
+          listStyle: "none",
+          padding: 0,
+          margin: "0 0 1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+        }}
+      >
+        {service.deliverables.map((d) => (
+          <li
+            key={d}
+            style={{
+              fontSize: "0.825rem",
+              color: "rgba(26,26,26,0.7)",
+              fontFamily: "var(--font-poppins), sans-serif",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              fontWeight: 500,
+            }}
+          >
+            <span
+              style={{
+                width: "5px",
+                height: "5px",
+                borderRadius: "50%",
+                backgroundColor: service.color,
+                flexShrink: 0,
+              }}
+            />
+            {d}
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA */}
+      <Link
+        href={service.href}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.4rem",
+          fontSize: "0.825rem",
+          fontWeight: 700,
+          color: service.color,
+          textDecoration: "none",
+          fontFamily: "var(--font-poppins), sans-serif",
+          letterSpacing: "0.04em",
+          textTransform: "uppercase",
+          transition: "gap 0.2s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.gap = "0.7rem";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.gap = "0.4rem";
+        }}
+      >
+        Explore Service
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M5 12h14M12 5l7 7-7 7"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </Link>
+    </motion.div>
+  );
+}
+
+export default function ExpertiseSection() {
   return (
     <section
       style={{
-        padding: "3.5rem 2rem",
+        padding: "5.5rem 2rem 6rem",
         background:
-          "linear-gradient(135deg, rgba(250, 250, 250, 0.5) 0%, rgba(255, 255, 255, 0.8) 100%)",
+          "radial-gradient(circle at top left, #fdf2f8 0, #f7f7fb 38%, #eef2ff 100%)",
         position: "relative",
         zIndex: 10,
-        fontFamily: "var(--font-poppins), var(--font-manrope), sans-serif",
       }}
     >
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
@@ -144,474 +321,190 @@ export default function ExpertiseSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          style={{
-            textAlign: "center",
-            marginBottom: "2.5rem",
-          }}
+          style={{ marginBottom: "3.5rem" }}
         >
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
             style={{
-              fontSize: "0.9rem",
+              fontSize: "0.75rem",
               textTransform: "uppercase",
-              letterSpacing: "0.25em",
+              letterSpacing: "0.28em",
               color: "#C41E3A",
               marginBottom: "0.75rem",
-              fontWeight: 600,
-              fontFamily: "var(--font-headline), sans-serif",
-            }}
-          >
-            Our Expertise
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            viewport={{ once: true }}
-            style={{
-              fontSize: "clamp(2.5rem, 5vw, 4rem)",
               fontWeight: 700,
-              color: "#1a1a1a",
-              marginBottom: "0.75rem",
-              fontFamily: "var(--font-headline), sans-serif",
-              lineHeight: "1.2",
-              letterSpacing: "-0.02em",
+              fontFamily: "var(--font-poppins), sans-serif",
             }}
           >
-            One Studio. Boundless Creativity.
-          </motion.h2>
-        </motion.div>
-
-        {/* Main Content - Desktop: Two Column, Mobile: Stacked */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.8fr)",
-            gap: "1.5rem",
-            alignItems: "start",
-          }}
-          className="expertise-grid"
-        >
-          {/* Left: Expertise Cards Stack */}
+            Our Services
+          </motion.p>
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              gap: "0.75rem",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              flexWrap: "wrap",
+              gap: "1.5rem",
             }}
-            className="expertise-cards"
           >
-            {expertiseItems.map((item, index) => {
-              const isSelected = selectedId === item.id;
-              return (
-                <motion.button
-                  key={item.id}
-                  onClick={() => setSelectedId(item.id)}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -2, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{
-                    padding: "1.25rem 1.5rem",
-                    borderRadius: "1rem",
-                    border: isSelected
-                      ? "2px solid transparent"
-                      : "1px solid rgba(0, 0, 0, 0.08)",
-                    background: isSelected
-                      ? "linear-gradient(135deg, rgba(196, 30, 58, 0.1), rgba(196, 30, 58, 0.05))"
-                      : "rgba(255, 255, 255, 0.9)",
-                    cursor: "pointer",
-                    textAlign: "left",
-                    transition: "all 0.3s ease",
-                    position: "relative",
-                    overflow: "hidden",
-                    boxShadow: isSelected
-                      ? "0 8px 30px rgba(196, 30, 58, 0.15), 0 0 0 1px rgba(196, 30, 58, 0.2)"
-                      : "0 2px 8px rgba(0, 0, 0, 0.04)",
-                    fontFamily: "var(--font-poppins), var(--font-manrope), sans-serif",
-                    font: "inherit",
-                  }}
-                >
-                  {/* Gradient Border for Selected */}
-                  {isSelected && (
-                    <motion.div
-                      layoutId="selectedBorder"
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        borderRadius: "1rem",
-                        padding: "2px",
-                        background:
-                          "linear-gradient(135deg, #C41E3A, #d946ef, #C41E3A)",
-                        WebkitMask:
-                          "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                        WebkitMaskComposite: "xor",
-                        maskComposite: "exclude",
-                        pointerEvents: "none",
-                      }}
-                    />
-                  )}
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              viewport={{ once: true }}
+              style={{
+                fontSize: "clamp(2.25rem, 4.5vw, 3.75rem)",
+                fontWeight: 800,
+                color: "#111",
+                margin: 0,
+                fontFamily: "var(--font-headline), sans-serif",
+                lineHeight: 1.05,
+                letterSpacing: "-0.025em",
+                maxWidth: "680px",
+              }}
+            >
+              One Studio.{" "}
+              <span
+                style={{
+                  background: "linear-gradient(135deg, #C41E3A, #d946ef)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                Seven Disciplines.
+              </span>
+            </motion.h2>
 
-                  <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "flex-start", gap: "1rem" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        minWidth: "48px",
-                        height: "48px",
-                        borderRadius: "0.75rem",
-                        background: isSelected
-                          ? "rgba(196, 30, 58, 0.12)"
-                          : "rgba(0, 0, 0, 0.04)",
-                        padding: "0.75rem",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <item.icon
-                        size={24}
-                        color={isSelected ? "#C41E3A" : "rgba(26, 26, 26, 0.6)"}
-                      />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h3
-                        style={{
-                          fontSize: "clamp(1.1rem, 1.5vw, 1.25rem)",
-                          fontWeight: 700,
-                          color: "#1a1a1a",
-                          marginBottom: "0.5rem",
-                          fontFamily: "var(--font-headline), sans-serif",
-                        }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p
-                        style={{
-                          fontSize: "0.9rem",
-                          color: "rgba(26, 26, 26, 0.6)",
-                          lineHeight: 1.5,
-                          fontFamily: "var(--font-poppins), sans-serif",
-                          fontWeight: 400,
-                        }}
-                      >
-                        {item.tagline}
-                      </p>
-                    </div>
-                  </div>
-                </motion.button>
-              );
-            })}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              viewport={{ once: true }}
+            >
+              <Link
+                href="/services"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.75rem 1.5rem",
+                  borderRadius: "100px",
+                  border: "1.5px solid rgba(0,0,0,0.15)",
+                  color: "#111",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  fontFamily: "var(--font-poppins), sans-serif",
+                  transition: "all 0.2s",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "#C41E3A";
+                  e.currentTarget.style.color = "#C41E3A";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)";
+                  e.currentTarget.style.color = "#111";
+                }}
+              >
+                View All Services
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5 12h14M12 5l7 7-7 7"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </motion.div>
           </div>
 
-          {/* Right: Detail Panel */}
-          <motion.div
-            key={selectedId}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.4 }}
-                  style={{
-                    padding: "2rem",
-              borderRadius: "1.25rem",
-              border: "1px solid rgba(0, 0, 0, 0.08)",
-              background:
-                "linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(250, 250, 250, 0.9))",
-              boxShadow: "0 8px 30px rgba(0, 0, 0, 0.06)",
-              position: "sticky",
-              top: "2rem",
-              height: "fit-content",
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            style={{
+              fontSize: "clamp(1rem, 1.4vw, 1.1rem)",
+              color: "rgba(26,26,26,0.55)",
+              marginTop: "1.25rem",
+              maxWidth: "580px",
               fontFamily: "var(--font-poppins), sans-serif",
+              fontWeight: 400,
+              lineHeight: 1.75,
             }}
-            className="detail-panel"
           >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedId}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
+            From cinematic 3D animation to architectural visualization and game art — we bring the same level of craft, speed, and creative thinking to every brief.
+          </motion.p>
+        </motion.div>
+
+        {/* Service Cards Bento Grid */}
+        <div
+          className="services-bento-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, minmax(0, 1fr))",
+            gap: "1.1rem",
+          }}
+        >
+          {services.map((service, index) => {
+            // Simple bento layout pattern based on index
+            let colSpan = 4;
+            let rowSpan = 1;
+            if (index === 0) {
+              colSpan = 7;
+              rowSpan = 2;
+            } else if (index === 1) {
+              colSpan = 5;
+              rowSpan = 2;
+            } else if (index === 5) {
+              colSpan = 6;
+              rowSpan = 1;
+            } else if (index === 6) {
+              colSpan = 6;
+              rowSpan = 1;
+            }
+
+            return (
+              <div
+                key={service.id}
+                style={{
+                  gridColumn: `span ${colSpan}`,
+                  gridRow: `span ${rowSpan}`,
+                }}
               >
-                {/* Service Badge with Icon */}
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    padding: "0.4rem 0.75rem",
-                    borderRadius: "0.5rem",
-                    background: "linear-gradient(135deg, rgba(196, 30, 58, 0.1), rgba(217, 70, 239, 0.1))",
-                    border: "1px solid rgba(196, 30, 58, 0.2)",
-                        marginBottom: "1.25rem",
-                  }}
-                >
-                  <selectedItem.icon size={18} color="#C41E3A" />
-                  <span
-                    style={{
-                      fontSize: "0.75rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.15em",
-                      color: "#C41E3A",
-                      fontWeight: 600,
-                      fontFamily: "var(--font-headline), sans-serif",
-                    }}
-                  >
-                    Service
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3
-                  style={{
-                    fontSize: "clamp(1.75rem, 2.5vw, 2.25rem)",
-                    fontWeight: 700,
-                    color: "#1a1a1a",
-                    marginBottom: "1rem",
-                    fontFamily: "var(--font-headline), sans-serif",
-                    lineHeight: "1.2",
-                  }}
-                >
-                  {selectedItem.title}
-                </h3>
-
-                {/* Description */}
-                <p
-                  style={{
-                    fontSize: "1.05rem",
-                    color: "rgba(26, 26, 26, 0.8)",
-                    lineHeight: "1.7",
-                        marginBottom: "1.5rem",
-                    fontFamily: "var(--font-poppins), sans-serif",
-                    fontWeight: 400,
-                  }}
-                >
-                  {selectedItem.description}
-                </p>
-
-                {/* Deliverables */}
-                <div style={{ marginBottom: "2rem" }}>
-                  <h4
-                    style={{
-                      fontSize: "0.75rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.15em",
-                      color: "#C41E3A",
-                      marginBottom: "1rem",
-                      fontWeight: 600,
-                      fontFamily: "var(--font-headline), sans-serif",
-                    }}
-                  >
-                    Deliverables
-                  </h4>
-                  <ul
-                    style={{
-                      listStyle: "none",
-                      padding: 0,
-                      margin: 0,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.75rem",
-                      fontFamily: "var(--font-poppins), sans-serif",
-                    }}
-                  >
-                    {selectedItem.deliverables.map((deliverable, idx) => (
-                      <motion.li
-                        key={idx}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        style={{
-                          fontSize: "0.95rem",
-                          color: "rgba(26, 26, 26, 0.75)",
-                          lineHeight: 1.6,
-                          fontFamily: "var(--font-poppins), sans-serif",
-                          fontWeight: 400,
-                          paddingLeft: "1.5rem",
-                          position: "relative",
-                        }}
-                      >
-                        <span
-                          style={{
-                            position: "absolute",
-                            left: 0,
-                            top: "0.5em",
-                            width: "6px",
-                            height: "6px",
-                            borderRadius: "50%",
-                            background: "linear-gradient(135deg, #C41E3A, #d946ef)",
-                          }}
-                        />
-                        {deliverable}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Industries */}
-                <div>
-                  <h4
-                    style={{
-                      fontSize: "0.75rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.15em",
-                      color: "#C41E3A",
-                      marginBottom: "1rem",
-                      fontWeight: 600,
-                      fontFamily: "var(--font-headline), sans-serif",
-                    }}
-                  >
-                    Industries
-                  </h4>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: "0.5rem",
-                      fontFamily: "var(--font-poppins), sans-serif",
-                    }}
-                  >
-                    {selectedItem.industries.map((industry, idx) => (
-                      <motion.span
-                        key={idx}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: idx * 0.05 }}
-                        style={{
-                          display: "inline-block",
-                          padding: "0.5rem 1rem",
-                          borderRadius: "0.5rem",
-                          background: "rgba(196, 30, 58, 0.08)",
-                          border: "1px solid rgba(196, 30, 58, 0.15)",
-                          fontSize: "0.875rem",
-                          color: "rgba(26, 26, 26, 0.8)",
-                          fontFamily: "var(--font-poppins), sans-serif",
-                          fontWeight: 500,
-                        }}
-                      >
-                        {industry}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA Link */}
-                <motion.a
-                  href="#portfolio"
-                  whileHover={{ x: 5 }}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    marginTop: "2rem",
-                    color: "#C41E3A",
-                    fontSize: "0.95rem",
-                    fontWeight: 600,
-                    textDecoration: "none",
-                    fontFamily: "var(--font-headline), sans-serif",
-                    transition: "all 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#d946ef";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "#C41E3A";
-                  }}
-                >
-                  View related projects
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    style={{ transition: "transform 0.2s ease" }}
-                  >
-                    <path
-                      d="M7 17L17 7M17 7H7M17 7V17"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </motion.a>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
+                <ServiceCard service={service} index={index} />
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Responsive Styles */}
+      {/* Responsive tweaks for bento grid */}
       <style jsx global>{`
-        /* Force font inheritance for all elements in Expertise section - NO Arial, Times, or system fonts */
-        section[style*="Our Expertise"],
-        section[style*="Our Expertise"] *,
-        .expertise-grid,
-        .expertise-grid *,
-        .expertise-cards,
-        .expertise-cards *,
-        .detail-panel,
-        .detail-panel * {
-          font-family: var(--font-poppins), var(--font-manrope), sans-serif !important;
-        }
-        .expertise-cards button,
-        .expertise-cards button *,
-        .expertise-cards h3,
-        .expertise-cards p,
-        .expertise-cards span {
-          font-family: var(--font-poppins), var(--font-manrope), sans-serif !important;
-        }
-        .detail-panel h3,
-        .detail-panel h4,
-        .detail-panel p,
-        .detail-panel li,
-        .detail-panel span,
-        .detail-panel a,
-        .detail-panel button {
-          font-family: var(--font-poppins), var(--font-manrope), sans-serif !important;
-        }
-        /* Override any browser defaults for headings in expertise section */
-        .expertise-cards h3,
-        .detail-panel h3,
-        .detail-panel h4 {
-          font-family: var(--font-headline), sans-serif !important;
-        }
-        @media (max-width: 968px) {
-          .expertise-grid {
-            grid-template-columns: 1fr !important;
+        @media (max-width: 1024px) {
+          .services-bento-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
           }
-          .expertise-cards {
-            display: flex;
-            flex-direction: row;
-            overflow-x: auto;
-            gap: 1rem;
-            padding-bottom: 1rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-          }
-          .expertise-cards button {
-            min-width: 280px;
-            flex-shrink: 0;
-          }
-          .detail-panel {
-            position: relative !important;
-            top: 0 !important;
-            margin-top: 2rem;
+          .services-bento-grid > * {
+            grid-column: span 1 !important;
+            grid-row: auto !important;
           }
         }
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
+        @media (max-width: 640px) {
+          .services-bento-grid {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+          .services-bento-grid > * {
+            grid-column: span 1 !important;
+            grid-row: auto !important;
           }
         }
       `}</style>
     </section>
   );
 }
-

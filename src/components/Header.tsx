@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { createSubcategorySlug } from "@/content/subcategories";
 
 type ServiceCategory = {
   id: string;
@@ -22,7 +25,7 @@ const servicesCategories: ServiceCategory[] = [
       "Medical & Scientific Animation",
       "Commercial & Brand Animation",
       "3D Rigging & Setup",
-      "Environment & World Building",
+      "Gaming Environment",
       "3D Asset Creation",
       "Motion Graphics 3D",
     ],
@@ -123,7 +126,6 @@ function ServicesDropdown({ isOpen, onClose }: ServicesDropdownProps) {
             gap: 0,
             zIndex: 1000,
           }}
-          onMouseLeave={onClose}
         >
           {/* First Level - Main Categories */}
           <motion.div
@@ -144,21 +146,18 @@ function ServicesDropdown({ isOpen, onClose }: ServicesDropdownProps) {
             {servicesCategories.map((category) => (
               <div
                 key={category.id}
+                data-category-item
                 style={{ position: "relative" }}
                 onMouseEnter={() => {
                   if (category.subcategories.length > 0) {
                     setHoveredCategory(category.id);
                   }
                 }}
-                onMouseLeave={() => setHoveredCategory(null)}
               >
                 <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (category.subcategories.length === 0) {
-                      onClose();
-                    }
+                  href={`/services/${category.id}`}
+                  onClick={() => {
+                    onClose();
                   }}
                   style={{
                     display: "flex",
@@ -195,6 +194,7 @@ function ServicesDropdown({ isOpen, onClose }: ServicesDropdownProps) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
+                data-submenu
                 style={{
                   backgroundColor: "#ffffff",
                   borderRadius: "0 0.5rem 0.5rem 0",
@@ -206,40 +206,42 @@ function ServicesDropdown({ isOpen, onClose }: ServicesDropdownProps) {
                 }}
                 onMouseEnter={() => {
                   // Keep submenu open when hovering over it
+                  setHoveredCategory(hoveredCategory);
                 }}
-                onMouseLeave={() => setHoveredCategory(null)}
               >
                 {servicesCategories
                   .find((cat) => cat.id === hoveredCategory)
-                  ?.subcategories.map((subcategory) => (
-                    <a
-                      key={subcategory}
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onClose();
-                      }}
-                      style={{
-                        display: "block",
-                        padding: "0.75rem 1rem",
-                        color: "#1a1a1a",
-                        fontSize: "0.9rem",
-                        textDecoration: "none",
-                        transition: "all 0.2s ease",
-                        fontFamily: "var(--font-poppins), sans-serif",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = "rgba(59, 130, 246, 0.1)";
-                        e.currentTarget.style.color = "#3b82f6";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = "transparent";
-                        e.currentTarget.style.color = "#1a1a1a";
-                      }}
-                    >
-                      {subcategory}
-                    </a>
-                  ))}
+                  ?.subcategories.map((subcategory) => {
+                    const subcategorySlug = createSubcategorySlug(subcategory);
+                    return (
+                      <a
+                        key={subcategory}
+                        href={`/services/${hoveredCategory}/${subcategorySlug}`}
+                        onClick={() => {
+                          onClose();
+                        }}
+                        style={{
+                          display: "block",
+                          padding: "0.75rem 1rem",
+                          color: "#1a1a1a",
+                          fontSize: "0.9rem",
+                          textDecoration: "none",
+                          transition: "all 0.2s ease",
+                          fontFamily: "var(--font-poppins), sans-serif",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(59, 130, 246, 0.1)";
+                          e.currentTarget.style.color = "#3b82f6";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#1a1a1a";
+                        }}
+                      >
+                        {subcategory}
+                      </a>
+                    );
+                  })}
               </motion.div>
             )}
           </AnimatePresence>
@@ -406,10 +408,10 @@ function MobileMenu({
 
             <nav style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               <a
-                href="#home"
+                href="#portfolio"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleScrollToSection("home");
+                  handleScrollToSection("portfolio");
                 }}
                 style={{
                   padding: "1rem",
@@ -426,7 +428,7 @@ function MobileMenu({
                   e.currentTarget.style.backgroundColor = "transparent";
                 }}
               >
-                Home
+                Work
               </a>
 
               {/* Services Accordion */}
@@ -476,12 +478,9 @@ function MobileMenu({
                         {servicesCategories.map((category) => (
                           <div key={category.id}>
                             <a
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                if (category.subcategories.length === 0) {
-                                  onClose();
-                                }
+                              href={`/services/${category.id}`}
+                              onClick={() => {
+                                onClose();
                               }}
                               style={{
                                 display: "block",
@@ -508,37 +507,39 @@ function MobileMenu({
                             </a>
                             {category.subcategories.length > 0 && (
                               <div style={{ paddingLeft: "1rem", marginTop: "0.25rem" }}>
-                                {category.subcategories.map((subcategory) => (
-                                  <a
-                                    key={subcategory}
-                                    href="#"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      onClose();
-                                    }}
-                                    style={{
-                                      display: "block",
-                                      padding: "0.5rem 1rem",
-                                      color: "rgba(255, 255, 255, 0.7)",
-                                      fontSize: "0.875rem",
-                                      borderRadius: "0.5rem",
-                                      textDecoration: "none",
-                                      transition: "all 0.2s ease",
-                                      fontFamily: "var(--font-poppins), sans-serif",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.backgroundColor =
-                                        "rgba(99, 102, 241, 0.15)";
-                                      e.currentTarget.style.color = "#ffffff";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.backgroundColor = "transparent";
-                                      e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
-                                    }}
-                                  >
-                                    {subcategory}
-                                  </a>
-                                ))}
+                                {category.subcategories.map((subcategory) => {
+                                  const subcategorySlug = createSubcategorySlug(subcategory);
+                                  return (
+                                    <a
+                                      key={subcategory}
+                                      href={`/services/${category.id}/${subcategorySlug}`}
+                                      onClick={() => {
+                                        onClose();
+                                      }}
+                                      style={{
+                                        display: "block",
+                                        padding: "0.5rem 1rem",
+                                        color: "rgba(255, 255, 255, 0.7)",
+                                        fontSize: "0.875rem",
+                                        borderRadius: "0.5rem",
+                                        textDecoration: "none",
+                                        transition: "all 0.2s ease",
+                                        fontFamily: "var(--font-poppins), sans-serif",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.backgroundColor =
+                                          "rgba(99, 102, 241, 0.15)";
+                                        e.currentTarget.style.color = "#ffffff";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.backgroundColor = "transparent";
+                                        e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
+                                      }}
+                                    >
+                                      {subcategory}
+                                    </a>
+                                  );
+                                })}
                               </div>
                             )}
                           </div>
@@ -630,10 +631,10 @@ function MobileMenu({
               </div>
 
               <a
-                href="#clients"
+                href="#industries"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleScrollToSection("clients");
+                  handleScrollToSection("industries");
                 }}
                 style={{
                   padding: "1rem",
@@ -650,7 +651,31 @@ function MobileMenu({
                   e.currentTarget.style.backgroundColor = "transparent";
                 }}
               >
-                Partnerships
+                Industries
+              </a>
+
+              <a
+                href="#process"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScrollToSection("process");
+                }}
+                style={{
+                  padding: "1rem",
+                  color: "rgba(255, 255, 255, 0.9)",
+                  fontSize: "1.1rem",
+                  borderRadius: "0.5rem",
+                  transition: "all 0.2s ease",
+                  textDecoration: "none",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "rgba(99, 102, 241, 0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                }}
+              >
+                Process
               </a>
 
               <a
@@ -737,6 +762,8 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -807,11 +834,14 @@ export default function Header() {
           }}
         >
           {/* Logo */}
-          <a
-            href="#home"
+          <Link
+            href="/"
             onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("home");
+              if (isHomepage) {
+                e.preventDefault();
+                scrollToSection("home");
+              }
+              // If not on homepage, let the Link navigate normally
             }}
             style={{
               position: "absolute",
@@ -821,11 +851,12 @@ export default function Header() {
               display: "flex",
               alignItems: "center",
               gap: "0.5rem",
+              textDecoration: "none",
             }}
           >
             <Image
               src="/Logo04.png"
-              alt="Supreme Animation"
+              alt="Supreme Animation Studio - Professional 2D & 3D Animation Services Logo"
               width={250}
               height={250}
               priority
@@ -836,7 +867,7 @@ export default function Header() {
                 filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.25))",
               }}
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav
@@ -849,51 +880,6 @@ export default function Header() {
             }}
             className="desktop-nav"
           >
-            <a
-              href="#home"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("home");
-              }}
-              className="nav-link"
-              style={{
-                color: "rgba(255, 255, 255, 0.9)",
-                fontSize: "0.95rem",
-                textDecoration: "none",
-                position: "relative",
-                paddingBottom: "0.5rem",
-                transition: "color 0.2s ease",
-                fontFamily: "var(--font-poppins), sans-serif",
-                fontWeight: 500,
-                letterSpacing: "0.01em",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#ffffff";
-                const underline = e.currentTarget.querySelector(".nav-underline") as HTMLElement;
-                if (underline) underline.style.width = "100%";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "rgba(255, 255, 255, 0.9)";
-                const underline = e.currentTarget.querySelector(".nav-underline") as HTMLElement;
-                if (underline) underline.style.width = "0%";
-              }}
-            >
-              Home
-              <span
-                className="nav-underline"
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  width: "0%",
-                  height: "2px",
-                  background:
-                    "linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%)",
-                  transition: "width 0.3s ease",
-                }}
-              />
-            </a>
-
             {/* Services Dropdown */}
             <div
               style={{ position: "relative" }}
@@ -952,7 +938,7 @@ export default function Header() {
               />
             </div>
 
-            {/* Portfolio Dropdown */}
+            {/* Work (was Portfolio) Dropdown */}
             <div
               style={{ position: "relative" }}
               onMouseEnter={() => setOpenDropdown("portfolio")}
@@ -988,7 +974,7 @@ export default function Header() {
                 aria-expanded={openDropdown === "portfolio"}
                 aria-haspopup="true"
               >
-                Portfolio
+                Work
                 <span style={{ fontSize: "0.75rem" }}>▼</span>
                 <span
                   className="nav-underline"
@@ -1012,10 +998,10 @@ export default function Header() {
             </div>
 
             <a
-              href="#clients"
+              href="#industries"
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection("clients");
+                scrollToSection("industries");
               }}
               className="nav-link"
               style={{
@@ -1040,7 +1026,52 @@ export default function Header() {
                 if (underline) underline.style.width = "0%";
               }}
             >
-              Partnerships
+              Industries
+              <span
+                className="nav-underline"
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "0%",
+                  height: "2px",
+                  background:
+                    "linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              />
+            </a>
+
+            <a
+              href="#process"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("process");
+              }}
+              className="nav-link"
+              style={{
+                color: "rgba(255, 255, 255, 0.9)",
+                fontSize: "0.95rem",
+                textDecoration: "none",
+                position: "relative",
+                paddingBottom: "0.5rem",
+                transition: "color 0.2s ease",
+                fontFamily: "var(--font-poppins), sans-serif",
+                fontWeight: 500,
+                letterSpacing: "0.01em",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#ffffff";
+                const underline = e.currentTarget.querySelector(".nav-underline") as HTMLElement;
+                if (underline) underline.style.width = "100%";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "rgba(255, 255, 255, 0.9)";
+                const underline = e.currentTarget.querySelector(".nav-underline") as HTMLElement;
+                if (underline) underline.style.width = "0%";
+              }}
+            >
+              Process
               <span
                 className="nav-underline"
                 style={{

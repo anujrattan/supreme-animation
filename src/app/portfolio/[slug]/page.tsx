@@ -5,13 +5,17 @@ import { notFound } from "next/navigation";
 import { getProjectBySlug, projects, type ProjectMedia } from "@/content/projects";
 import pageStyles from "../projectPage.module.css";
 import ProjectCTAButton from "@/components/ProjectCTAButton";
+import Header from "@/components/Header";
+import MinimalFooter from "@/components/MinimalFooter";
 
-function Media({ media }: { media: ProjectMedia }) {
+function Media({ media, projectTitle }: { media: ProjectMedia; projectTitle: string }) {
   if (media.kind === "image") {
+    // Generate SEO-friendly alt text if not provided
+    const altText = media.alt || `${projectTitle} - Supreme Animation Studio Portfolio Project`;
     return (
       <Image
         src={media.src}
-        alt={media.alt}
+        alt={altText}
         width={1600}
         height={900}
         priority
@@ -25,12 +29,15 @@ function Media({ media }: { media: ProjectMedia }) {
     );
   }
 
+  // For videos, add aria-label for accessibility
+  const videoLabel = `${projectTitle} - Animation Video by Supreme Animation Studio`;
   return (
     <video
       controls
       playsInline
       preload="metadata"
       poster={media.poster}
+      aria-label={videoLabel}
       style={{
         width: "100%",
         borderRadius: "1.25rem",
@@ -83,6 +90,18 @@ export default async function PortfolioProjectPage({ params }: { params: Promise
 
   const currentIndex = projects.findIndex((p) => p.slug === project.slug);
   const nextProject = currentIndex >= 0 ? projects[(currentIndex + 1) % projects.length] : undefined;
+  
+  // Generate image structured data for SEO
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://supremeanimation.com';
+  const imageSchema = project.thumb && project.thumb.kind === 'image' ? {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "contentUrl": `${baseUrl}${project.thumb.src}`,
+    "description": project.thumb.alt || `${project.title} - ${project.summary}`,
+    "name": project.title,
+    "caption": project.summary,
+  } : null;
+
   const caseStudy = project.caseStudy ?? {
     challenge: "Add a short, NDA-safe description of the problem you were solving for this client.",
     approach: [
@@ -100,15 +119,24 @@ export default async function PortfolioProjectPage({ params }: { params: Promise
   };
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#09090f",
-        color: "#ffffff",
-        padding: "clamp(2.5rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)",
-      }}
-      className={pageStyles.page}
-    >
+    <>
+      <Header />
+      <main
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#09090f",
+          color: "#ffffff",
+          padding: "clamp(2.5rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)",
+          paddingTop: `calc(var(--header-height) + clamp(2.5rem, 5vw, 4rem))`,
+        }}
+        className={pageStyles.page}
+      >
+      {imageSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
+        />
+      )}
       <div style={{ maxWidth: "1100px", margin: "0 auto" }} className={pageStyles.container}>
         <div style={{ marginBottom: "1.25rem" }}>
           <Link
@@ -167,7 +195,7 @@ export default async function PortfolioProjectPage({ params }: { params: Promise
         {/* Hero + sidebar */}
         <section className={pageStyles.heroGrid} style={{ marginBottom: "3rem" }}>
           <div style={{ position: "relative" }}>
-            {project.thumb ? <Media media={project.thumb} /> : <PlaceholderHero />}
+            {project.thumb ? <Media media={project.thumb} projectTitle={project.title} /> : <PlaceholderHero />}
           </div>
 
           <aside className={`${pageStyles.card} ${pageStyles.cardPad}`} style={{ position: "sticky", top: "calc(var(--header-height) + 2rem)" }}>
@@ -532,7 +560,7 @@ export default async function PortfolioProjectPage({ params }: { params: Promise
             <div className={pageStyles.galleryGrid}>
               {project.gallery.map((m, idx) => (
                 <div key={`${project.slug}-g-${idx}`}>
-                  <Media media={m} />
+                  <Media media={m} projectTitle={`${project.title} - Gallery Image ${idx + 1}`} />
                 </div>
               ))}
             </div>
@@ -600,7 +628,9 @@ export default async function PortfolioProjectPage({ params }: { params: Promise
           </div>
         </section>
       </div>
+      <MinimalFooter />
     </main>
+    </>
   );
 }
 

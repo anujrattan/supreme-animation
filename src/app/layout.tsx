@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Poppins } from "next/font/google";
 import "./globals.css";
+import { ContactModalProvider } from "@/contexts/ContactModalContext";
+import ContactModalWrapper from "@/components/ContactModalWrapper";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -88,11 +90,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/thumbnail.png", sizes: "any" },
-      { url: "/thumbnail.png", type: "image/png" },
+      { url: "/favicon.png", sizes: "any" },
+      { url: "/favicon.png", type: "image/png" },
     ],
     apple: [
-      { url: "/thumbnail.png", sizes: "180x180", type: "image/png" },
+      { url: "/favicon.png", sizes: "180x180", type: "image/png" },
     ],
   },
   category: "Animation & Video Production",
@@ -122,11 +124,11 @@ const organizationSchema = {
   ],
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "4800 Meadows Rd, STE 300",
-    "addressLocality": "Lake Oswego",
-    "addressRegion": "OR",
-    "postalCode": "97035",
-    "addressCountry": "US"
+    "streetAddress": "E-190, Fourth Floor, Phase 8B",
+    "addressLocality": "Mohali",
+    "addressRegion": "Punjab",
+    "postalCode": "160055",
+    "addressCountry": "IN"
   }
 };
 
@@ -138,11 +140,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} ${poppins.variable}`}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-        {children}
+        <ContactModalProvider>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          />
+          {children}
+          <ContactModalWrapper />
+        </ContactModalProvider>
       </body>
     </html>
   );

@@ -8,6 +8,7 @@
     "postbuild": "cp .htaccess out/.htaccess",
     "start": "next start",
     "lint": "eslint",
+    "compress-videos": "node scripts/compress-portfolio-videos.js",
     "install:all": "npm install && cd backend && npm install",
     "dev:all": "concurrently \"npm run dev\" \"cd backend && npm run dev\" --names \"frontend,backend\" --prefix-colors \"cyan,yellow\" --kill-others-on-fail"
   },
@@ -23,12 +24,15 @@
     "three": "^0.181.2"
   },
   "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@types/fluent-ffmpeg": "^2.1.28",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "concurrently": "^8.2.2",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
+    "fluent-ffmpeg": "^2.1.3",
     "typescript": "^5"
   }
 }
