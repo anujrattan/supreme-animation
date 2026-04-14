@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Mail, MapPin, Phone, Instagram, ArrowUp, Linkedin, Youtube } from "lucide-react";
+import { Phone, Instagram, ArrowUp, Linkedin, Youtube } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -48,8 +48,6 @@ export default function Footer() {
     { label: "About", id: "about" },
     { label: "Contact", id: "contact" },
   ];
-
-  const email = "info@supremeanimation.com";
 
   const SocialGlyph = ({ text }: { text: string }) => (
     <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
@@ -307,47 +305,6 @@ export default function Footer() {
               Get in Touch
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <a
-                href={`mailto:${email}`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  color: "rgba(255, 255, 255, 0.7)",
-                  textDecoration: "none",
-                  fontSize: "0.95rem",
-                  fontFamily: "var(--font-poppins), sans-serif",
-                  fontWeight: 400,
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#C41E3A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
-                }}
-              >
-                <Mail size={18} />
-                <span>{email}</span>
-              </a>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  color: "rgba(255, 255, 255, 0.7)",
-                  fontSize: "0.95rem",
-                  fontFamily: "var(--font-poppins), sans-serif",
-                  fontWeight: 400,
-                }}
-              >
-                <MapPin size={18} style={{ flexShrink: 0 }} />
-                <p style={{ margin: 0, lineHeight: "1.6" }}>
-                  E-190, Fourth Floor, Phase 8B
-                  <br />
-                  Mohali, Punjab, 160055
-                </p>
-              </div>
               <div
                 style={{
                   display: "flex",
